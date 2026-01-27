@@ -5,11 +5,50 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-  moduleFormat    = "cjs"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
 }
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  permitons String[]
+  users     User[]
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  role      Role    @relation(fields: [roleId], references: [id])
+  roleId    Int
+  email     String  @unique
+  firstName String
+  lastName  String
+  password  String
+  actifs    Actif[]
+}
+
+model Actif {
+  id          Int        @id @default(autoincrement())
+  vendeur     User       @relation(fields: [vendeurId], references: [id])
+  vendeurId   Int
+  name        String
+  prix        Float
+  description String
+  previews    String[]
+  source      String[]
+  category    Category[]
+}
+
+model Category {
+  id     Int     @id @default(autoincrement())
+  name   String
+  actifs Actif[]
+}
+
+// model Payment {
+// }
