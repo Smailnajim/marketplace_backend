@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { UsersService } from './user.service';
+import { UsersService } from './users/user.service';
 import { Prisma } from './generated/prisma/client';
-import { RoleService } from './role.service';
+import { RoleService } from './roles/role.service';
 
 @Controller()
 export class AppController {
@@ -17,11 +17,6 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post()
-  async createUser(@Body() user: Prisma.UserCreateInput) {
-    console.log('create user\n', user);
-    return await this.usersService.createUser(user);
-  }
   @Post('/roles')
   async createRole(@Body() role: Prisma.RoleCreateInput) {
     console.log('create role\n', role);

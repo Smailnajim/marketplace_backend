@@ -2,13 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { UsersService } from './user.service';
-import { PrismaService } from './prisma.service';
-import { RoleService } from './role.service';
+import { UsersService } from './users/user.service';
+import { RoleService } from './roles/role.service';
+import { UsersModule } from './users/users.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), UsersModule, PrismaModule, RolesModule],
   controllers: [AppController],
-  providers: [AppService, UsersService, PrismaService, RoleService],
+  providers: [AppService, UsersService, RoleService],
 })
 export class AppModule {}
